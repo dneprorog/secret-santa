@@ -4,7 +4,8 @@
   "description": "Secret Santa game API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc index.ts",
+    "start": ""
   },
   "keywords": [
     "secret",
@@ -12,5 +13,8 @@
     "api"
   ],
   "author": "Maksym Prykhodko",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
 }
