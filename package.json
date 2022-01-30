@@ -2,10 +2,11 @@
   "name": "secret-santa",
   "version": "1.0.0",
   "description": "Secret Santa game API",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "tsc index.ts",
-    "start": ""
+    "build": "tsc index.js",
+    "start": "node index.js"
   },
   "keywords": [
     "secret",
@@ -16,5 +17,8 @@
   "license": "MIT",
   "devDependencies": {
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "express": "^4.17.2"
   }
 }
