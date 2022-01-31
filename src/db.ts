@@ -1,6 +1,14 @@
 import sqlite3 from 'sqlite3';
 import type { Participant } from './types';
 
+class DBError extends Error {
+  err: Error;
+  constructor(msg: string, err?: Error) {
+    super(`DB Error: ${msg}`);
+    this.err = err;
+  }
+}
+
 export default class DB {
   db: sqlite3.Database;
 
@@ -17,12 +25,41 @@ export default class DB {
     return new Promise((resolve, reject) => {
       this.db.all(getAllParticipantsQuery, (err, rows) => {
         if (err !== null) {
-          console.log('DB: Cannot read `participants` table');
-          reject('DB: Cannot read `participants` table');
+          reject(new DBError('Cannot read `participants` table', err));
         }
 
         resolve(rows);
       });
+    });
+  }
+
+  public async addParticipant(
+    firstName: string,
+    lastName: string,
+    wishlist: string[]
+  ): Promise<number> {
+    const addParticipantQuery =
+      'INSERT INTO participants (first_name, last_name, wishlist) VALUES (?, ?, ?);';
+
+    const serializedWishlist = JSON.stringify(wishlist);
+
+    return new Promise((resolve, reject) => {
+      this.db.run(
+        addParticipantQuery,
+        [firstName, lastName, serializedWishlist],
+        function (err: Error | null) {
+          if (err !== null) {
+            reject(
+              new DBError(
+                'Cannot add new participant to `participants` table',
+                err
+              )
+            );
+          }
+
+          resolve(this.lastID);
+        }
+      );
     });
   }
 
@@ -42,8 +79,7 @@ export default class DB {
     return new Promise((resolve, reject) => {
       this.db.run(createParticipantsTableQuery, (err: Error | null) => {
         if (err !== null) {
-          console.log('DB: Cannot create `participants` table');
-          reject('DB: Cannot create `participants` table');
+          reject(new DBError('Cannot create `participants` table', err));
         }
 
         resolve();
