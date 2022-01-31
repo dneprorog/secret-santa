@@ -1,6 +1,12 @@
 import Server from './server';
 import DB from './db';
 
-const db = new DB();
+async function main(): Promise<void> {
+  const db = new DB();
+  await db.init();
 
-new Server(db);
+  const server = new Server(db);
+  await server.init();
+}
+
+main();
