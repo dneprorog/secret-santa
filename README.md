@@ -30,11 +30,9 @@ $ Content-Type: application/json
 }
 
 
-
 # Get Participants
 $ GET http://localhost:3000/participants
 $ Content-Type: application/json
-
 
 
 # Get participant by id.
@@ -42,17 +40,14 @@ $ GET http://localhost:3000/participants/1
 $ Content-Type: application/json
 
 
-
 # Delete Participant by id.
 $ DELETE http://localhost:3000/participants/1
 $ Content-Type: application/json
 
 
-
 # Shuffle
 $ POST http://localhost:3000/shuffle
 $ Content-Type: application/json
-
 
 
 # Santa get information (first_name, last_name, wishlist) about his recipient by ID.
